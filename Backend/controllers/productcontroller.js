@@ -14,9 +14,9 @@ exports.addProduct = async (req, res) => {
       created_at: new Date(),
       updated_at: new Date(),
     });
-    genQr.generateQr(product);
-    const result = await product.save();
-    result.append("QR_hashcode", product.QR_hashcode);
+    var result = await product.save();
+    result.QR_hashcode = await genQr.generateQr(result._id.toString());
+    result = await result.save();
     res.status(200).json({
       message: "Product added successfully",
       data: result,
@@ -26,6 +26,7 @@ exports.addProduct = async (req, res) => {
       message: "Internal server error",
       error: error,
     });
+    console.log(error);
   }
 };
 exports.updateProduct = async (req, res) => {

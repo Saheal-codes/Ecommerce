@@ -10,6 +10,7 @@ const productSchema = new schema({
   description: {
     type: String,
     required: true,
+    minlength: 10,
   },
   selling_price: {
     type: Number,
@@ -30,7 +31,6 @@ const productSchema = new schema({
   deleted_at: {
     type: Date,
     default: null,
-    required: true,
   },
   quantity: {
     type: Number,
