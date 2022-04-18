@@ -130,22 +130,3 @@ exports.createBill = async (req, res) => {
 var Jimp = require("jimp");
 var fs = require("fs");
 var qrCode = require("qrcode-reader");
-
-// Read the image and create a buffer
-// (Here image.png is our QR code)
-// var buffer = fs.readFileSync(__dirname + "/image.png");
-
-// Parse the image using Jimp.read() method
-// Jimp.read(buffer, function (err, image) {
-//   if (err) {
-//     console.error(err);
-//   }
-//   let qrcode = new qrCode();
-//   qrcode.callback = function (err, value) {
-//     if (err) {
-//       console.error(err);
-//     }
-//     console.log(value.result);
-//   };
-//   qrcode.decode(image.bitmap);
-// });
