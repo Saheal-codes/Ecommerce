@@ -127,6 +127,3 @@ exports.createBill = async (req, res) => {
     });
   }
 };
-var Jimp = require("jimp");
-var fs = require("fs");
-var qrCode = require("qrcode-reader");
