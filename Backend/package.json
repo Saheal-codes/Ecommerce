@@ -12,6 +12,7 @@
     "jsqr": "^1.4.0",
     "mongoose": "^6.2.11",
     "morgan": "^1.10.0",
+    "qrcode": "^1.5.0",
     "qrcode-reader": "^1.0.4"
   }
 }

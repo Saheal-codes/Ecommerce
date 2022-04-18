@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 
 const productSchema = new schema({
-  _id: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
   title: {
     type: String,
     required: true,
@@ -25,7 +21,6 @@ const productSchema = new schema({
   },
   QR_hashcode: {
     type: String,
-    required: true,
   },
   created_at: {
     type: Date,

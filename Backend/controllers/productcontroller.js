@@ -1,11 +1,11 @@
 const productmodel = require("../models/productmodel");
 const cartmodel = require("../models/cartmodel");
 const mongoose = require("mongoose");
+const genQr = require("./Qrhandler");
 
 exports.addProduct = async (req, res) => {
   try {
     const product = new productmodel({
-      _id: new mongoose.Types.ObjectId(),
       title: req.body.title.toLocaleLowerCase(),
       selling_price: req.body.selling_price,
       cost_price: req.body.cost_price,
@@ -14,7 +14,9 @@ exports.addProduct = async (req, res) => {
       created_at: new Date(),
       updated_at: new Date(),
     });
+    genQr.generateQr(product);
     const result = await product.save();
+    result.append("QR_hashcode", product.QR_hashcode);
     res.status(200).json({
       message: "Product added successfully",
       data: result,
