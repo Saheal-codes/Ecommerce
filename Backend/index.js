@@ -9,6 +9,7 @@ const morgan = require("morgan");
 app.use(cors());
 const routes = require("./routes/routes");
 app.use(bodyparser.json());
+app.use(bodyparser.urlencoded());
 app.use(routes);
 app.use("*", (req, res) => {
   res.status(404).json({
