@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
 const usermodel = require("../models/usermodel");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
-exports.addUser = async (req, res) => {
+exports.signup = async (req, res) => {
   try {
     const newuser = await usermodel.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       username: req.body.username,
-      email: req.body.email,
       password: CryptoJS.AES.encrypt(
         req.body.password,
         process.env.hpass
@@ -15,11 +15,12 @@ exports.addUser = async (req, res) => {
     });
     res.send({ message: "User added successfully", data: newuser }, 201);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json(error);
     console.log(error);
   }
 };
-exports.loginUser = async (req, res) => {
+
+exports.login = async (req, res) => {
   try {
     const user = await usermodel.findOne({
       username: req.body.username,
@@ -36,10 +37,10 @@ exports.loginUser = async (req, res) => {
         const accesstoken = jwt.sign(others, process.env.jwtpass, {
           expiresIn: "6h",
         });
-        res.send(
-          { message: "User logged in successfully", data: others, accesstoken },
-          200
-        );
+        res.status(200).send({
+          message: "User logged in successfully",
+          data: others, accesstoken
+        });
       } else {
         res.status(401).send({ message: "Invalid Credentials !" });
       }
@@ -49,18 +50,27 @@ exports.loginUser = async (req, res) => {
     console.log(error);
   }
 };
-exports.deleteUser = async (req, res) => {
+
+exports.fetch_user_list = async (req, res) => {
   try {
-    const user = await usermodel.findByIdAndDelete(req.params.id);
+    const users = await usermodel.find({});
+    res.status(200).send({ message: "User list fetched successfully", data: users });
+  } catch (error) {
+    res.status(500).send(error);
+    console.log(error);
+  }
+}
+
+exports.fetch_user_details = async (req, res) => {
+  try {
+    const user = await usermodel.findById(req.params.id);
     if (!user) {
       res.status(404).send({ message: "User not found" });
     } else {
-      res
-        .status(200)
-        .send({ message: "User deleted successfully", data: user });
+      res.status(200).send({ message: "User details fetched successfully", data: user });
     }
   } catch (error) {
     res.status(500).send(error);
     console.log(error);
   }
-};
+}
