@@ -127,3 +127,5 @@ exports.createBill = async (req, res) => {
     });
   }
 };
+exports.upload_products = async (req, res) => {
+};
